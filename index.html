@@ -400,6 +400,81 @@ section.page{animation:fadein .25s ease}
   .tabbar{display:none}
   .face.front .word{font-size:2.4rem}
 }
+
+/* ===== 第四轮新增：用户系统 / 排行榜 / 级别 / 听读 ===== */
+.user-row{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:.82rem}
+.user-chip{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.16);border-radius:20px;padding:4px 12px 4px 6px;color:#fff}
+.user-chip .av{font-size:1.1rem}
+.user-chip .guest-tag{font-size:.68rem;background:rgba(255,255,255,.28);border-radius:8px;padding:0 6px;margin-left:2px}
+.user-switch{margin-left:auto;background:rgba(255,255,255,.16);color:#fff;border-radius:16px;padding:5px 12px;font-size:.75rem;min-height:32px}
+
+/* 登录页 */
+.login-mask{position:fixed;inset:0;background:linear-gradient(160deg,var(--navy),var(--navy2));z-index:200;display:flex;align-items:center;justify-content:center;padding:18px;overflow-y:auto}
+.login-card{background:var(--bg);width:100%;max-width:460px;border-radius:18px;padding:20px 16px;box-shadow:0 8px 30px rgba(0,0,0,.3)}
+.login-card h2{font-size:1.15rem;color:var(--navy);text-align:center;margin-bottom:4px}
+.login-card .login-sub{text-align:center;font-size:.8rem;color:var(--muted);margin-bottom:14px}
+.user-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.user-card{display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:14px 8px;min-height:84px}
+.user-card:active{transform:scale(.96)}
+.user-card .av{font-size:2rem}
+.user-card .nm{font-size:.9rem;font-weight:700;color:var(--navy)}
+.user-card .pt{font-size:.72rem;color:var(--muted)}
+.login-div{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.75rem;margin:12px 0}
+.login-div:before,.login-div:after{content:"";flex:1;height:1px;background:var(--line)}
+.avatar-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
+.avatar-pick{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:#fff;font-size:1.4rem;display:flex;align-items:center;justify-content:center}
+.avatar-pick.on{border-color:var(--orange);background:#fff4e8;transform:scale(1.08)}
+.login-input{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px;font-size:.92rem;font-family:inherit;min-height:46px;background:#fff}
+.guest-btn{width:100%;margin-top:12px;padding:12px;border-radius:12px;border:1.5px dashed var(--line);background:#fff;color:var(--muted);font-size:.88rem;min-height:48px}
+
+/* 排行榜 */
+.lb-row{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.lb-row.me{border-color:var(--orange);background:#fff8ee;box-shadow:0 2px 8px rgba(242,140,56,.18)}
+.lb-row .rk{flex:none;width:30px;height:30px;border-radius:50%;background:#e6ecf3;color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem}
+.lb-row:nth-child(1) .rk{background:linear-gradient(135deg,#ffd76e,#f5b942);color:#7a5200}
+.lb-row:nth-child(2) .rk{background:linear-gradient(135deg,#e8edf3,#c9d4e0);color:#4a5a6a}
+.lb-row:nth-child(3) .rk{background:linear-gradient(135deg,#f0c39a,#d99c62);color:#6b3f14}
+.lb-row .av{font-size:1.5rem;flex:none}
+.lb-row .nm{flex:1;font-weight:700;font-size:.92rem;color:var(--navy);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-row .nm .guest-tag{font-size:.68rem;color:var(--muted);font-weight:400}
+.lb-row .sc{flex:none;text-align:right}
+.lb-row .sc .p{font-weight:800;color:var(--orange);font-size:1rem}
+.lb-row .sc .s{font-size:.7rem;color:var(--muted)}
+.lb-preview{display:flex;flex-direction:column;gap:6px}
+
+/* 级别徽章与弹窗 */
+.level-badge{border-color:#cdd9e6;background:#f0f5fb}
+.lt-q{font-size:.95rem;font-weight:700;line-height:1.6;margin-bottom:12px}
+.lt-level-big{font-size:1.6rem;font-weight:800;color:var(--navy);text-align:center;margin:8px 0 4px}
+.lt-desc{font-size:.85rem;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;line-height:1.7;margin:10px 0}
+.level-menu-row{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+
+/* 课文听读 */
+.text-ops{display:flex;gap:8px;margin:12px 0 8px;flex-wrap:wrap}
+.text-ops .pbtn{flex:1;min-width:140px}
+.read-done-btn{width:100%;margin-top:4px}
+.read-done-btn.on{background:linear-gradient(135deg,var(--green),#46bd84);color:#fff;border:none}
+.read-done-btn:disabled{background:#eef1f5;color:var(--muted);border-style:dashed;cursor:not-allowed}
+.read-done-hint{font-size:.72rem;color:var(--muted);text-align:center;margin-top:4px}
+.read-stars-line{font-size:.78rem;color:#b8860b;margin-top:6px;text-align:center}
+
+/* 听整篇播放条 */
+.listen-prog-wrap{margin:12px 0 6px}
+.listen-sent{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;font-size:.95rem;line-height:1.7;min-height:80px}
+.listen-sent .si{font-size:.72rem;color:var(--muted);margin-bottom:6px}
+
+/* 朗读评星 */
+.read-target{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}
+.read-target .en{font-size:1rem;font-weight:700;line-height:1.7}
+.read-target .cn{font-size:.8rem;color:var(--muted);margin-top:6px}
+.rec-btn{width:100%;padding:14px;border-radius:14px;font-size:1rem;font-weight:700;min-height:52px;background:linear-gradient(135deg,var(--red),#ef7a7a);color:#fff;box-shadow:0 3px 8px rgba(224,82,82,.3)}
+.rec-btn.listening{animation:recpulse 1.1s infinite}
+@keyframes recpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+.rec-result{margin-top:10px;font-size:.85rem;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;line-height:1.6}
+.star-row{display:flex;justify-content:center;gap:6px;margin:10px 0}
+.star-btn{font-size:1.9rem;padding:4px;filter:grayscale(1);opacity:.4}
+.star-btn.on{filter:none;opacity:1;transform:scale(1.12)}
+.star-show{font-size:1.6rem;text-align:center;letter-spacing:2px}
 </style>
   <link rel="manifest" href="manifest.json">
 </head>
@@ -407,6 +482,7 @@ section.page{animation:fadein .25s ease}
 <header class="app-header">
   <h1>📘 高中英语学习工具</h1>
   <div class="sub">每天 40 分钟 · 词汇 + 语法 + 课文 + 专注</div>
+  <div class="user-row" id="user-row"></div>
 </header>
 
 <nav class="topnav"><div class="inner" id="topnav"></div></nav>
@@ -446,6 +522,11 @@ section.page{animation:fadein .25s ease}
   </div>
 
   <div class="card">
+    <h2>🏆 排行榜 <button class="mini-btn" id="lb-open">查看全部</button></h2>
+    <div class="lb-preview" id="lb-preview"></div>
+  </div>
+
+  <div class="card">
     <h2>🗓️ 每周学习建议</h2>
     <div class="week-tips">
       <div class="tip"><span class="day">周一三五</span><span>重点突破<b>词汇 + 阅读</b>：学新单词，做 1 篇限时阅读，积累长难句。</span></div>
@@ -459,7 +540,7 @@ section.page{animation:fadein .25s ease}
 <!-- ========== 2. 单词闪卡 ========== -->
 <section class="page hidden" id="page-flash">
   <div class="card">
-    <h2>🃏 单词闪卡 <span class="muted" style="font-weight:400" id="flash-lib-desc">外研版必修一同步词汇</span></h2>
+    <h2>🃏 单词闪卡 <span class="muted" style="font-weight:400" id="flash-lib-desc">外研版必修一同步词汇</span><button class="mini-btn level-badge" id="level-badge">📏 测级</button></h2>
     <div class="mode-bar" id="lib-bar">
       <button class="mode-btn" id="lib-book">📖 课本同步（外研版必修一）</button>
       <button class="mode-btn" id="lib-adv">🚀 高阶拓展</button>
@@ -477,6 +558,12 @@ section.page{animation:fadein .25s ease}
         <option value="10">10 个</option>
         <option value="15">15 个</option>
         <option value="20">20 个</option>
+      </select>
+      <span>语速</span>
+      <select id="voice-rate-sel">
+        <option value="0.75">🐢 慢</option>
+        <option value="0.92">标准</option>
+        <option value="1.15">🐇 快</option>
       </select>
     </div>
     <div class="progress-wrap"><div class="progress-bar" id="flash-progress"></div></div>
@@ -626,6 +713,62 @@ section.page{animation:fadein .25s ease}
       <button class="pbtn" id="unlock-close">稍后</button>
       <button class="pbtn main" id="unlock-go">前往小测 →</button>
     </div>
+  </div>
+</div>
+
+<!-- 登录 / 选用户（首次打开全屏显示） -->
+<div class="login-mask hidden" id="login-modal">
+  <div class="login-card">
+    <h2>👋 欢迎使用高中英语学习工具</h2>
+    <div class="login-sub">选择你的身份开始学习，每位同学的进度独立保存</div>
+    <div class="user-grid" id="login-users"></div>
+    <div class="login-div">新建用户</div>
+    <input class="login-input" id="login-name" placeholder="输入昵称（如：小明）" maxlength="12">
+    <div class="avatar-row" id="login-avatars"></div>
+    <button class="pbtn main" id="login-create" style="width:100%">✔ 创建并开始</button>
+    <button class="guest-btn" id="login-guest">🚶 游客模式：先随便逛逛（不参与排行榜）</button>
+  </div>
+</div>
+
+<!-- 水平检测弹窗 -->
+<div class="modal-mask hidden" id="level-modal">
+  <div class="modal-card">
+    <div id="level-body"></div>
+  </div>
+</div>
+
+<!-- 排行榜弹窗 -->
+<div class="modal-mask hidden" id="lb-modal">
+  <div class="modal-card">
+    <h3>🏆 排行榜（本机所有用户）</h3>
+    <div class="muted" style="margin-bottom:10px">积分规则：每日打卡 +10 ｜ 新标记单词 +1/个 ｜ 语法达标 +5 ｜ 小测每对 1 题 +2（按最佳成绩差值）｜ 听完整篇课文 +5 ｜ 朗读每颗星 +2</div>
+    <div id="lb-list"></div>
+    <div class="modal-actions"><button class="pbtn main" id="lb-close">✔ 关闭</button></div>
+  </div>
+</div>
+
+<!-- 听整篇课文播放弹窗 -->
+<div class="modal-mask hidden" id="listen-modal">
+  <div class="modal-card">
+    <h3 id="listen-title">▶ 听课文</h3>
+    <div class="listen-prog-wrap">
+      <div class="progress-txt"><span id="listen-prog-txt">第 0/0 句</span><span id="listen-state-txt">播放中…</span></div>
+      <div class="progress-wrap"><div class="progress-bar" id="listen-bar" style="width:0%"></div></div>
+    </div>
+    <div class="listen-sent" id="listen-sent"></div>
+    <div class="muted" style="margin-top:10px;font-size:.75rem">⚠️ 需自然播完整篇才算完成；中途取消、切走页面都不计入。</div>
+    <div class="modal-actions"><button class="pbtn" id="listen-cancel">✕ 取消收听</button></div>
+  </div>
+</div>
+
+<!-- 朗读评星弹窗 -->
+<div class="modal-mask hidden" id="read-modal">
+  <div class="modal-card">
+    <h3 id="read-title">🎤 我来朗读</h3>
+    <div class="progress-txt"><span id="read-prog-txt">第 0/0 句</span><span id="read-stars-sofar"></span></div>
+    <div class="progress-wrap" style="margin:6px 0 10px"><div class="progress-bar" id="read-bar" style="width:0%"></div></div>
+    <div id="read-body"></div>
+    <div class="modal-actions"><button class="pbtn" id="read-cancel">✕ 退出朗读</button></div>
   </div>
 </div>
 
@@ -10569,15 +10712,27 @@ var TEXTS = [
  }
 ];
 /* ================= 存储工具（全部带容错） ================= */
+/* 多用户隔离：除 GLOBAL_KEYS 外，所有 key 自动加当前用户前缀 "u:<id>:"。
+   排行榜 / 用户列表 / 当前用户指针为全局数据，不加前缀。 */
+var GLOBAL_KEYS = { users:1, cur_user:1, leaderboard:1 };
+function curUserId(){
+  try{ return localStorage.getItem("engapp_cur_user") || ""; }catch(e){ return ""; }
+}
+function lsRealKey(key){
+  if(GLOBAL_KEYS[key]) return "engapp_" + key;
+  var uid = curUserId();
+  if(!uid) return "engapp_" + key;   /* 未登录时（登录页阶段）读旧全局数据，用于迁移检测 */
+  return "engapp_u:" + uid + ":" + key;
+}
 function lsGet(key, fallback){
   try{
-    var v = localStorage.getItem("engapp_" + key);
+    var v = localStorage.getItem(lsRealKey(key));
     if(v === null || v === undefined) return fallback;
     return JSON.parse(v);
   }catch(e){ return fallback; }
 }
 function lsSet(key, val){
-  try{ localStorage.setItem("engapp_" + key, JSON.stringify(val)); }
+  try{ localStorage.setItem(lsRealKey(key), JSON.stringify(val)); }
   catch(e){ /* 存储不可用时静默降级为内存态 */ }
 }
 function todayStr(){
@@ -10621,6 +10776,9 @@ function buildNav(){
   });
 }
 function switchTab(id){
+  /* 切 Tab 中断听课文/朗读：不计完成 */
+  if(listenState) cancelListen(true);
+  if(readState) cancelReadAloud();
   currentTab = id;
   TABS.forEach(function(t){
     $("page-"+t.id).classList.toggle("hidden", t.id !== id);
@@ -10669,6 +10827,7 @@ function doCheckin(auto){
   }
   days.push(today);
   lsSet("checkins", days);
+  lbAddPoints(10, 0);   /* 积分：每日打卡 +10 */
   renderHome();
 }
 
@@ -10757,7 +10916,7 @@ var qPos = 0;
 var showWb = false;       // 生词本视图开关
 var spLock = false;       // 拼写判定中（防止重复提交）
 
-function curGroups(){ return curLib === "adv" ? ADV_GROUPS : BOOK_GROUPS; }
+function curGroups(){ return curLib === "adv" ? visibleAdvGroups() : BOOK_GROUPS; }
 function libUniqueWords(groups){
   var set = {};
   groups.forEach(function(g){ g.words.forEach(function(w){ set[w[0]] = 1; }); });
@@ -10801,6 +10960,7 @@ function saveWordRec(word, status){
     f: old.f || todayStr()
   };
   lsSet("words", rec);
+  if(!old.s) lbAddPoints(1, 0);   /* 积分：单词首次标记 +1（重复标记不重复加分） */
   checkExamUnlock();
 }
 function todayNewCount(){
@@ -10815,7 +10975,11 @@ function spellable(w){
 function buildQueue(){
   var rec = getWordRecs();
   var now = Date.now();
-  var words = curGroups()[curGroup].words;
+  /* 防御：当前词库分组为空（如级别不开放 adv）或 curGroup 越界时回落课本词库，避免 .words 抛错 */
+  var gs = curGroups();
+  if(!gs || !gs.length){ curLib = "book"; gs = BOOK_GROUPS; }
+  if(curGroup < 0 || curGroup >= gs.length) curGroup = 0;
+  var words = gs[curGroup].words;
   queue = [];
   for(var i=0;i<words.length;i++){
     var r = rec[words[i][0]];
@@ -10861,17 +11025,91 @@ function renderChips(){
     box.appendChild(c);
   });
 }
+/* ================= 语音朗读（跨平台容错封装） ================= */
+var voiceList = [];
+var voiceWarned = false;
+function refreshVoices(){
+  try{
+    if("speechSynthesis" in window){
+      var v = window.speechSynthesis.getVoices();
+      if(v && v.length) voiceList = v;
+    }
+  }catch(e){}
+}
+/* 选语音优先级：en-US > en-GB > 任何 en-* > 列表首个（系统默认兜底） */
+function pickVoice(){
+  var i, v;
+  for(i = 0; i < voiceList.length; i++){ v = voiceList[i]; if(/^en-US$/i.test(v.lang || "")) return v; }
+  for(i = 0; i < voiceList.length; i++){ v = voiceList[i]; if(/^en-GB$/i.test(v.lang || "")) return v; }
+  for(i = 0; i < voiceList.length; i++){ v = voiceList[i]; if(/^en([-_]|$)/i.test(v.lang || "")) return v; }
+  return voiceList.length ? voiceList[0] : null;
+}
+function getVoiceRate(){
+  var r = lsGet("voice_rate", 0.92);
+  return (r === 0.75 || r === 0.92 || r === 1.15) ? r : 0.92;
+}
+/* 长句按标点分段（>120 字符），避免部分安卓 TTS 长文本截断或卡死 */
+function splitSpeech(text){
+  text = String(text);
+  if(text.length <= 120) return [text];
+  var parts = [], buf = "";
+  for(var i = 0; i < text.length; i++){
+    buf += text[i];
+    if(".,;:!?，。；：！？…".indexOf(text[i]) >= 0 && buf.trim().length > 0){
+      parts.push(buf.trim()); buf = "";
+    }else if(buf.length >= 110){
+      var cut = buf.lastIndexOf(" ");
+      if(cut < 60) cut = 100;
+      parts.push(buf.slice(0, cut).trim());
+      buf = buf.slice(cut);
+    }
+  }
+  if(buf.trim()) parts.push(buf.trim());
+  return parts.length ? parts : [text];
+}
+function speakParts(parts, idx){
+  if(idx >= parts.length) return;
+  var u = new SpeechSynthesisUtterance(parts[idx]);
+  u.lang = "en-US";
+  u.rate = getVoiceRate();
+  var v = pickVoice();
+  if(v) u.voice = v;
+  u.onend = function(){ speakParts(parts, idx + 1); };
+  u.onerror = function(){ /* 某段失败即停止后续段，不报错 */ };
+  window.speechSynthesis.speak(u);
+}
 function speak(text){
   try{
-    if(!("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined") return;
-    var u = new SpeechSynthesisUtterance(text);
-    u.lang = "en-US";
-    u.rate = 0.92;
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(u);
-  }catch(e){ /* 不支持语音的浏览器静默降级 */ }
+    if(!("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined"){
+      /* 微信/QQ 内置浏览器等不支持时：一次性提示，静默降级 */
+      if(!voiceWarned){
+        voiceWarned = true;
+        showToast("当前浏览器不支持朗读，建议用 Safari / Chrome / 系统浏览器打开");
+      }
+      return;
+    }
+    refreshVoices();
+    window.speechSynthesis.cancel();               /* 防叠音：先停掉上一段 */
+    try{ window.speechSynthesis.resume(); }catch(e2){} /* iOS 偶发卡住时恢复 */
+    var parts = splitSpeech(text);
+    setTimeout(function(){ speakParts(parts, 0); }, 50); /* cancel 后稍候再播，规避 Chrome 吞句 */
+  }catch(e){ /* 静默降级 */ }
 }
+/* 安卓 Chrome 等平台语音列表异步加载：监听 voiceschanged 刷新缓存 */
+try{
+  if("speechSynthesis" in window){
+    refreshVoices();
+    if(typeof window.speechSynthesis.addEventListener === "function"){
+      window.speechSynthesis.addEventListener("voiceschanged", refreshVoices);
+    }else{
+      window.speechSynthesis.onvoiceschanged = refreshVoices;
+    }
+  }
+}catch(e){}
 function renderFlash(){
+  /* 级别门禁：低级别用户不开放高阶词库（回写修正状态，避免把 adv 残留进 flash_state） */
+  if(curLib === "adv" && !visibleAdvGroups().length){ curLib = "book"; curGroup = 0; saveFlashState(); }
+  $("lib-adv").style.display = visibleAdvGroups().length ? "" : "none";
   var groups = curGroups();
   if(curGroup >= groups.length) curGroup = 0;
   var group = groups[curGroup];
@@ -11036,7 +11274,22 @@ function initFlash(){
   if(st && typeof st === "object"){
     if(st.lib === "adv" || st.lib === "book") curLib = st.lib;
     if(typeof st.group === "number" && st.group >= 0) curGroup = st.group;
+  }else if(effLevel() === "l3"){
+    /* 高阶用户首次进入：默认打开高阶拓展词库 */
+    curLib = "adv";
   }
+  /* 级别门禁（与 renderFlash 一致）：flash_state 里残留 lib:"adv" 而当前级别
+     不开放高阶词库时，必须回落 book 并回写，否则 curGroups() 为空会抛错 */
+  if(curLib === "adv" && !visibleAdvGroups().length){
+    curLib = "book";
+    curGroup = 0;
+    saveFlashState();
+  }
+  $("voice-rate-sel").value = String(getVoiceRate());
+  $("voice-rate-sel").onchange = function(){
+    lsSet("voice_rate", parseFloat(this.value));
+    speak("Great!");
+  };
   $("goal-select").value = String(getGoal());
   $("goal-select").onchange = function(){
     var v = parseInt(this.value, 10);
@@ -11044,7 +11297,7 @@ function initFlash(){
     buildQueue(); renderFlash();
   };
   $("lib-book").onclick = function(){ if(curLib !== "book"){ curLib = "book"; curGroup = 0; showWb = false; saveFlashState(); buildQueue(); renderFlash(); } };
-  $("lib-adv").onclick = function(){ if(curLib !== "adv"){ curLib = "adv"; curGroup = 0; showWb = false; saveFlashState(); buildQueue(); renderFlash(); } };
+  $("lib-adv").onclick = function(){ if(curLib !== "adv" && visibleAdvGroups().length){ curLib = "adv"; curGroup = 0; showWb = false; saveFlashState(); buildQueue(); renderFlash(); } };
   $("mode-new").onclick = function(){ curMode = "new"; showWb = false; buildQueue(); renderFlash(); };
   $("mode-review").onclick = function(){ curMode = "review"; showWb = false; buildQueue(); renderFlash(); };
   $("mode-spell").onclick = function(){ curMode = "spell"; showWb = false; buildQueue(); renderFlash(); };
@@ -11491,6 +11744,8 @@ function showQuizResult(){
       best[quiz.gi] = quiz.score + "/" + total;
       lsSet("gram_best", best);
     }
+    /* 积分：语法测试首次达标 +5（重复刷达标不重复加） */
+    if(quiz.score >= PASS_N && prevScore < PASS_N) lbAddPoints(5, 0);
     updateGramBestUI();
     checkExamUnlock();
   }
@@ -11502,6 +11757,8 @@ function showQuizResult(){
     if(quiz.score > epScore){
       eb[u5] = quiz.score + "/" + total;
       lsSet("exam_best", eb);
+      /* 积分：单元小测每对 1 题 +2，按最佳成绩差值加（刷低分不加） */
+      lbAddPoints((quiz.score - Math.max(epScore, 0)) * 2, 0);
     }
   }
   var pct = Math.round(quiz.score / total * 100);
@@ -11668,7 +11925,19 @@ function renderTexts(){
         "<div class='t-note'>✨ " + esc(s.note) + (s.src === "imit" ? " <span class='t-imit'>✏️ 话题仿写</span>" : "") + "</div></div>";
     });
     var rdDone = getReadDone()[i + 1] ? true : false;
-    html += "<button class='pbtn read-done-btn" + (rdDone ? " on" : "") + "' data-ui='" + i + "'>" + (rdDone ? "✅ 已完成本单元朗读（点击取消）" : "☐ 我已完成本单元朗读") + "</button>";
+    var stars = getReadStars()[i + 1];
+    /* 听整篇 + 朗读评星入口 */
+    html += "<div class='text-ops'>"+
+      "<button class='pbtn main listen-btn' data-ui='" + i + "'>▶ 听整篇课文</button>"+
+      "<button class='pbtn read-aloud-btn' data-ui='" + i + "'>🎤 我来朗读" + (stars ? " <span class='g-best'>⭐" + stars + "</span>" : "") + "</button></div>";
+    /* 听完才能打勾：未完成 listen_done 时按钮禁用；已完成的可点击取消（老数据里已打勾的单元保持可取消） */
+    if(rdDone){
+      html += "<button class='pbtn read-done-btn on' data-ui='" + i + "'>✅ 已完成本单元朗读（点击取消）</button>";
+    }else{
+      html += "<button class='pbtn read-done-btn' data-ui='" + i + "' disabled>🔒 先听完整篇课文才能打勾</button>"+
+        "<div class='read-done-hint'>点上方「▶ 听整篇课文」，自然播完整篇后自动打勾</div>";
+    }
+    if(stars) html += "<div class='read-stars-line'>🎤 我的朗读最佳：平均 ⭐" + stars + " / 5</div>";
     body.innerHTML = html;
     item.appendChild(head);
     item.appendChild(body);
@@ -11684,7 +11953,20 @@ function renderTexts(){
   var rds = box.querySelectorAll(".read-done-btn");
   for(var r = 0; r < rds.length; r++){
     rds[r].onclick = function(){
+      if(this.disabled) return;
       toggleReadDone(parseInt(this.getAttribute("data-ui"), 10) + 1);
+    };
+  }
+  var lbs = box.querySelectorAll(".listen-btn");
+  for(var lb2 = 0; lb2 < lbs.length; lb2++){
+    lbs[lb2].onclick = function(){
+      startListen(parseInt(this.getAttribute("data-ui"), 10) + 1);
+    };
+  }
+  var ras = box.querySelectorAll(".read-aloud-btn");
+  for(var ra = 0; ra < ras.length; ra++){
+    ras[ra].onclick = function(){
+      startReadAloud(parseInt(this.getAttribute("data-ui"), 10) + 1);
     };
   }
 }
@@ -11752,8 +12034,15 @@ function unitGroup(u, kind){
 function getReadDone(){ var r = lsGet("read_done", {}); return (r && typeof r === "object" && !Array.isArray(r)) ? r : {}; }
 function toggleReadDone(u){
   var rd = getReadDone();
+  /* 未听完时 read_done 不可能为 true（按钮禁用），这里只处理取消打勾 */
   rd[u] = !rd[u];
   lsSet("read_done", rd);
+  if(!rd[u]){
+    /* 取消打勾时同时清掉 listen_done：小测解锁状态随之回收（examUnlocked 实时读 read_done） */
+    var ld = getListenDone();
+    if(ld[u]){ ld[u] = false; lsSet("listen_done", ld); }
+    showToast("已取消本单元朗读完成标记");
+  }
   renderTexts();
   if(rd[u]) checkExamUnlock();
 }
@@ -11875,7 +12164,7 @@ function renderExam(){
       h += "<button class='pbtn main exam-start' data-u='" + u + "'>📝 开始测试" + (b ? " <span class='g-best'>🏆 " + esc(String(b)) + "</span>" : "") + "</button>";
       h += "<div class='muted exam-tip'>20 题：词汇 8 + 短语 4 + 语法 8，每次重测重新随机抽题</div>";
     }else{
-      h += "<div class='muted exam-tip'>解锁条件：① 闪卡把本单元单词+短语全部标记过 ② 课文 Tab 勾选“我已完成本单元朗读” ③ 本单元语法测试 ≥ 9/12</div>";
+      h += "<div class='muted exam-tip'>解锁条件：① 闪卡把本单元单词+短语全部标记过 ② 课文 Tab 点「▶ 听整篇课文」自然播完整篇（自动打勾） ③ 本单元语法测试 ≥ 9/12</div>";
     }
     card.innerHTML = h;
     box.appendChild(card);
@@ -11886,21 +12175,677 @@ function renderExam(){
   }
 }
 
-/* ================= 启动 ================= */
-buildNav();
-$("checkin-btn").onclick = doCheckin;
-initPlanEditor();
-initFlash();
-$("gram-retest-btn").onclick = startRetest;
-$("gram-wb-btn").onclick = openWrongBook;
-$("quiz-modal").onclick = function(ev){ if(ev.target === this) closeQuiz(); };
-$("unlock-close").onclick = function(){ $("unlock-modal").classList.add("hidden"); };
-$("unlock-modal").onclick = function(ev){ if(ev.target === this) this.classList.add("hidden"); };
-updateWrongEntryUI();
-renderGrammar();
-renderTexts();
-initPomo();
-switchTab("home");
+/* ================= 用户系统 / 排行榜 / 水平检测 / 课文听读（第四轮新增） ================= */
+/*
+ * 积分规则（排行榜）：
+ *   每日打卡 +10（每日仅一次）
+ *   单词每标记一个 +1（仅首次标记计分，重复标记不重复加分）
+ *   语法测试达标（≥9/12）+5（每个专题首次达标计分）
+ *   单元小测每对 1 题 +2（按最佳成绩差值加分，刷低分不加）
+ *   课文听完整篇 +5（每单元首次听完计分）
+ *   朗读评星每颗星 +2（每次完整读完一篇，按当次总星数加分）
+ */
+
+/* ---------- 用户系统 ---------- */
+var AVATARS = ["🦊","🐼","🐯","🦁","🐸","🐰","🐨","🦄","🐳","🦉","🌸","⚽"];
+function getUsers(){ var u = lsGet("users", []); return Array.isArray(u) ? u : []; }
+function saveUsers(u){ lsSet("users", u); }
+function getUser(uid){
+  var us = getUsers();
+  for(var i=0;i<us.length;i++) if(us[i].id === uid) return us[i];
+  return null;
+}
+function isGuest(){ return curUserId() === "guest"; }
+function curUserName(){
+  if(isGuest()) return "游客";
+  var u = getUser(curUserId());
+  return u ? u.name : "同学";
+}
+function curUserAvatar(){
+  if(isGuest()) return "🚶";
+  var u = getUser(curUserId());
+  return u ? u.avatar : "🙂";
+}
+/* 旧版（未加用户前缀）数据迁移：创建第一个用户时，把 engapp_xxx 老数据
+   整体搬进 engapp_u:<id>:xxx，避免老用户丢进度。之后自动清掉旧 key。 */
+var LEGACY_KEYS = ["checkins","words","read_done","listen_done","read_stars","exam_best","gram_best",
+  "gram_seen","gram_wrong","plan","flash_state","wrong_book","pomo","pomodoros","daily_goal",
+  "voice_rate","exam_noticed","level"];
+function hasLegacyData(){
+  try{
+    for(var i=0;i<LEGACY_KEYS.length;i++){
+      if(localStorage.getItem("engapp_" + LEGACY_KEYS[i]) !== null) return true;
+    }
+    for(var j=0;j<localStorage.length;j++){
+      var k = localStorage.key(j);
+      if(k && k.indexOf("engapp_plan_") === 0) return true;
+    }
+  }catch(e){}
+  return false;
+}
+function migrateLegacyToUser(uid){
+  var moved = 0;
+  try{
+    LEGACY_KEYS.forEach(function(k){
+      var v = localStorage.getItem("engapp_" + k);
+      if(v !== null && localStorage.getItem("engapp_u:" + uid + ":" + k) === null){
+        localStorage.setItem("engapp_u:" + uid + ":" + k, v);
+        localStorage.removeItem("engapp_" + k);
+        moved++;
+      }
+    });
+    /* 按日期存的计划勾选 plan_YYYY-MM-DD 也一并迁移 */
+    var dayKeys = [];
+    for(var j=0;j<localStorage.length;j++){
+      var k2 = localStorage.key(j);
+      if(k2 && k2.indexOf("engapp_plan_") === 0) dayKeys.push(k2);
+    }
+    dayKeys.forEach(function(k2){
+      var suffix = k2.slice("engapp_".length);
+      localStorage.setItem("engapp_u:" + uid + ":" + suffix, localStorage.getItem(k2));
+      localStorage.removeItem(k2);
+      moved++;
+    });
+  }catch(e){}
+  return moved;
+}
+function setCurUser(uid){
+  try{
+    if(uid) localStorage.setItem("engapp_cur_user", uid);
+    else localStorage.removeItem("engapp_cur_user");
+  }catch(e){}
+}
+var loginAvatarPick = AVATARS[0];
+function renderLogin(){
+  var us = getUsers();
+  var grid = $("login-users");
+  grid.innerHTML = "";
+  us.forEach(function(u){
+    var b = document.createElement("button");
+    b.className = "user-card";
+    b.innerHTML = "<span class='av'>" + esc(u.avatar) + "</span><span class='nm'>" + esc(u.name) + "</span>";
+    b.onclick = function(){ uiSelectUser(u.id); };
+    grid.appendChild(b);
+  });
+  var ar = $("login-avatars");
+  ar.innerHTML = "";
+  AVATARS.forEach(function(a){
+    var b = document.createElement("button");
+    b.className = "avatar-pick" + (a === loginAvatarPick ? " on" : "");
+    b.textContent = a;
+    b.onclick = function(){ loginAvatarPick = a; renderLogin(); };
+    ar.appendChild(b);
+  });
+  $("login-modal").classList.remove("hidden");
+}
+function uiSelectUser(uid){
+  setCurUser(uid);
+  $("login-modal").classList.add("hidden");
+  bootApp();
+}
+function uiCreateUser(){
+  var name = ($("login-name").value || "").trim();
+  if(!name){ showLoginHint("先给自己起个昵称吧～"); return; }
+  var us = getUsers();
+  var uid = "u" + Date.now().toString(36) + Math.floor(Math.random()*1000);
+  var u = { id:uid, name:name, avatar:loginAvatarPick, created:Date.now() };
+  us.push(u);
+  saveUsers(us);
+  /* 第一个用户创建时自动迁移旧数据（老进度不丢） */
+  var moved = 0;
+  if(us.length === 1 && hasLegacyData()) moved = migrateLegacyToUser(uid);
+  setCurUser(uid);
+  lbSyncUser(uid);
+  $("login-modal").classList.add("hidden");
+  bootApp();
+  if(moved > 0) showToast("📦 已把之前的学习记录迁移到「" + name + "」名下");
+  /* 新建用户：弹出水平检测（可跳过，跳过后默认高一上） */
+  setTimeout(function(){ openLevelTest(true); }, 400);
+}
+function uiGuest(){
+  setCurUser("guest");
+  $("login-modal").classList.add("hidden");
+  bootApp();
+  showToast("🚶 游客模式：数据独立保存，不参与排行榜");
+}
+function showLoginHint(msg){
+  var el = $("login-name");
+  el.value = "";
+  el.placeholder = msg;
+}
+function uiSwitchUser(){
+  /* 切换用户：清掉当前用户指针后整页重载，所有状态按新用户重新初始化 */
+  if(listenState) cancelListen(true);
+  if(readState) cancelReadAloud();
+  setCurUser(null);
+  try{ location.reload(); }catch(e){ $("login-modal").classList.remove("hidden"); renderLogin(); }
+}
+function renderUserChip(){
+  var row = $("user-row");
+  if(!row) return;
+  row.innerHTML = "<span class='user-chip'><span class='av'>" + esc(curUserAvatar()) + "</span><span>" + esc(curUserName()) + "</span>"
+    + (isGuest() ? "<span class='guest-tag'>游客</span>" : "") + "</span>"
+    + "<button class='user-switch' id='user-switch-btn'>⇄ 切换用户</button>";
+  $("user-switch-btn").onclick = uiSwitchUser;
+}
+function initUserSystem(){
+  $("login-create").onclick = uiCreateUser;
+  $("login-guest").onclick = uiGuest;
+  $("login-name").onkeydown = function(ev){ if(ev.key === "Enter") uiCreateUser(); };
+  if(curUserId()){
+    /* 老用户刷新：自动登录 */
+    bootApp();
+    /* 兜底回显：即使 bootApp 中途有渲染步骤异常，用户条/级别徽章/排行榜预览也必须刷新 */
+    try{ renderUserChip(); }catch(e){}
+    try{ renderLevelBadge(); }catch(e){}
+    try{ renderLbPreview(); }catch(e){}
+  }
+  else{ renderLogin(); }
+}
+
+/* ---------- 排行榜 ---------- */
+function lbGet(){ var b = lsGet("leaderboard", {}); return (b && typeof b === "object" && !Array.isArray(b)) ? b : {}; }
+function lbSyncUser(uid){
+  if(!uid || uid === "guest") return;
+  var u = getUser(uid);
+  if(!u) return;
+  var b = lbGet();
+  if(!b[uid]) b[uid] = { points:0, stars:0 };
+  b[uid].name = u.name;
+  b[uid].avatar = u.avatar;
+  if(typeof b[uid].points !== "number") b[uid].points = 0;
+  if(typeof b[uid].stars !== "number") b[uid].stars = 0;
+  lsSet("leaderboard", b);
+}
+/* 完成动作时实时累加积分；游客不上榜 */
+function lbAddPoints(points, stars){
+  var uid = curUserId();
+  if(!uid || uid === "guest") return;
+  lbSyncUser(uid);
+  var b = lbGet();
+  b[uid].points += points;
+  if(stars) b[uid].stars += stars;
+  lsSet("leaderboard", b);
+  renderLbPreview();
+}
+function lbSortedRows(){
+  var b = lbGet();
+  var us = getUsers();
+  var rows = [];
+  us.forEach(function(u){
+    var e = b[u.id] || { points:0, stars:0 };
+    rows.push({ id:u.id, name:u.name, avatar:u.avatar, points:e.points||0, stars:e.stars||0 });
+  });
+  rows.sort(function(a, c){ return (c.points - a.points) || (c.stars - a.stars); });
+  return rows;
+}
+function lbRowHtml(r, rank){
+  var me = r.id === curUserId();
+  return "<div class='lb-row" + (me ? " me" : "") + "'>"+
+    "<span class='rk'>" + rank + "</span><span class='av'>" + esc(r.avatar) + "</span>"+
+    "<span class='nm'>" + esc(r.name) + (me ? " 👈" : "") + "</span>"+
+    "<span class='sc'><div class='p'>" + r.points + " 分</div><div class='s'>⭐ 朗读星 " + r.stars + "</div></span></div>";
+}
+function renderLbPreview(){
+  var box = $("lb-preview");
+  if(!box) return;
+  var rows = lbSortedRows().slice(0, 3);
+  if(!rows.length){
+    box.innerHTML = "<div class='muted'>还没有上榜记录，完成打卡、标记单词、听课文都能赚积分！</div>";
+    return;
+  }
+  var html = "";
+  rows.forEach(function(r, i){ html += lbRowHtml(r, i + 1); });
+  box.innerHTML = html;
+}
+function openLeaderboard(){
+  var rows = lbSortedRows();
+  var html = "";
+  rows.forEach(function(r, i){ html += lbRowHtml(r, i + 1); });
+  if(!rows.length) html = "<div class='quiz-perfect' style='margin:16px 0'>📭 暂无用户，先创建一个吧</div>";
+  $("lb-list").innerHTML = html;
+  $("lb-modal").classList.remove("hidden");
+}
+
+/* ---------- 水平检测 → 定制闪卡 ---------- */
+/* 级别：l1=高一上（基础）｜l2=高一下（进阶）｜l3=高阶（拔高）
+ * 定级规则（15 题，难度递进：语法 U1→U6 各 1 题 + 课本词汇 5 题 + 高阶词汇 4 题）：
+ *   得分 0-6  → 高一上：只开放课本同步词库 BOOK_GROUPS
+ *   得分 7-11 → 高一下：课本词库 + 高阶词库前 3 组（阅读难词/完形难词/熟词僻义，最贴近考试）
+ *   得分 12+  → 高阶：全部词库，闪卡默认进入高阶拓展
+ */
+var LEVELS = {
+  l1: { name:"高一上 · 基础", desc:"先把课本单词和短语吃透，打好基本功！" },
+  l2: { name:"高一下 · 进阶", desc:"课本词库 + 阅读/完形难词 + 熟词僻义，向考试进阶。" },
+  l3: { name:"高阶 · 拔高", desc:"全部词库开放，默认进入高阶拓展，冲击高分！" }
+};
+function getLevel(){
+  var l = lsGet("level", null);
+  return (l === "l1" || l === "l2" || l === "l3") ? l : null;
+}
+function effLevel(){ return getLevel() || "l1"; }   /* 未测级/游客默认按高一上 */
+function setLevel(l){ lsSet("level", l); }
+function visibleAdvGroups(){
+  var l = effLevel();
+  if(l === "l3") return ADV_GROUPS;
+  if(l === "l2") return ADV_GROUPS.slice(0, 3);
+  return [];
+}
+var lt = null; /* {qs, idx, score, answered, forNewUser} */
+function buildLevelTest(){
+  var qs = [];
+  var u, i;
+  /* 语法 6 题：每个单元随机 1 题，难度按单元递进 */
+  for(u = 1; u <= 6; u++){
+    if(QUIZZES[u-1] && QUIZZES[u-1].length){
+      qs = qs.concat(pickN(QUIZZES[u-1], 1));
+    }
+  }
+  /* 课本词汇 5 题：U1-U3 抽 3（基础），U4-U6 抽 2（中等） */
+  var bg = function(name){ for(var k=0;k<BOOK_GROUPS.length;k++) if(BOOK_GROUPS[k].chip === name) return BOOK_GROUPS[k]; return null; };
+  var easyPools = [bg("U1 单词"), bg("U2 单词"), bg("U3 单词")];
+  var midPools  = [bg("U4 单词"), bg("U5 单词"), bg("U6 单词")];
+  var easyEntries = [];
+  easyPools.forEach(function(g){ if(g) easyEntries = easyEntries.concat(g.words); });
+  var midEntries = [];
+  midPools.forEach(function(g){ if(g) midEntries = midEntries.concat(g.words); });
+  qs = qs.concat(genChoiceQs(easyEntries, 3, easyPools))
+         .concat(genChoiceQs(midEntries, 2, midPools));
+  /* 高阶词汇 4 题：阅读难词 + 完形难词 */
+  var advPools = [ADV_GROUPS[0], ADV_GROUPS[1]];
+  var advEntries = [];
+  advPools.forEach(function(g){ if(g) advEntries = advEntries.concat(g.words); });
+  qs = qs.concat(genChoiceQs(advEntries, 4, advPools));
+  return qs.slice(0, 15);
+}
+function openLevelTest(forNewUser){
+  lt = { qs:buildLevelTest(), idx:0, score:0, answered:false, forNewUser:!!forNewUser };
+  $("level-modal").classList.remove("hidden");
+  renderLevelQ();
+}
+function renderLevelQ(){
+  var q = lt.qs[lt.idx], total = lt.qs.length;
+  var html = "<div class='quiz-top'><span class='quiz-prog'>📏 水平检测 第 " + (lt.idx+1) + "/" + total + " 题</span>"+
+    "<span class='quiz-score-now'>得分 " + lt.score + "</span></div>";
+  html += "<div class='lt-q'>" + blankify(q.s) + "</div><div class='quiz-opts'>";
+  q.o.forEach(function(op, i){
+    html += "<button class='quiz-opt' data-oi='" + i + "'>" + String.fromCharCode(65+i) + ". " + esc(op) + "</button>";
+  });
+  html += "</div><div id='lt-fb'></div>";
+  if(lt.idx === 0){
+    html += "<div class='muted' style='margin-top:10px;font-size:.75rem'>共 15 题，难度递进，根据成绩定制你的词库。<button class='mini-btn' id='lt-skip'>跳过，按高一上开始</button></div>";
+  }
+  $("level-body").innerHTML = html;
+  var opts = $("level-body").querySelectorAll(".quiz-opt");
+  for(var k = 0; k < opts.length; k++){
+    opts[k].onclick = function(){ answerLevel(parseInt(this.getAttribute("data-oi"), 10)); };
+  }
+  var sk = $("lt-skip");
+  if(sk) sk.onclick = function(){ finishLevelTest(true); };
+}
+function answerLevel(i){
+  if(!lt || lt.answered) return;
+  lt.answered = true;
+  var q = lt.qs[lt.idx];
+  var ok = (i === q.a);
+  if(ok) lt.score++;
+  var opts = $("level-body").querySelectorAll(".quiz-opt");
+  for(var k = 0; k < opts.length; k++){
+    var oi = parseInt(opts[k].getAttribute("data-oi"), 10);
+    if(oi === q.a) opts[k].classList.add("ok");
+    else if(oi === i) opts[k].classList.add("bad");
+    opts[k].disabled = true;
+  }
+  $("lt-fb").innerHTML = "<div class='quiz-verdict " + (ok ? "ok" : "bad") + "'>" +
+    (ok ? "✅ 正确" : "❌ 正确答案：" + String.fromCharCode(65+q.a) + ". " + esc(q.o[q.a])) + "</div>"+
+    "<button class='pbtn main' id='lt-next'>" + (lt.idx + 1 < lt.qs.length ? "下一题 ▶" : "查看定级结果 🏁") + "</button>";
+  $("lt-next").onclick = function(){
+    lt.idx++;
+    lt.answered = false;
+    if(lt.idx < lt.qs.length) renderLevelQ();
+    else finishLevelTest(false);
+  };
+}
+function levelOfScore(s){ return s >= 12 ? "l3" : (s >= 7 ? "l2" : "l1"); }
+function finishLevelTest(skipped){
+  var lv = skipped ? "l1" : levelOfScore(lt ? lt.score : 0);
+  setLevel(lv);
+  var score = lt ? lt.score : 0, total = lt ? lt.qs.length : 15;
+  lt = null;
+  /* 高阶用户默认进高阶词库 */
+  if(lv === "l3"){ curLib = "adv"; curGroup = 0; showWb = false; saveFlashState(); }
+  var info = LEVELS[lv];
+  var html = "<div class='quiz-final'>"+
+    "<div class='quiz-big'>" + (skipped ? "—" : score + "<em> / " + total + "</em>") + "</div>"+
+    "<div class='lt-level-big'>" + (lv === "l3" ? "🚀" : lv === "l2" ? "📈" : "🌱") + " " + info.name + "</div>"+
+    "<div class='lt-desc'>" + (skipped ? "已按默认级别开始，之后可随时在闪卡页点「级别徽章」重新检测。" : esc(info.desc)) + "</div>"+
+    "<div class='modal-actions'><button class='pbtn main' id='lt-done'>✔ 开始学习</button>"+
+    (skipped ? "" : "<button class='pbtn' id='lt-retry'>🔁 重新测一次</button>") + "</div></div>";
+  $("level-body").innerHTML = html;
+  $("lt-done").onclick = function(){
+    $("level-modal").classList.add("hidden");
+    if(curUserId()){ buildQueue(); renderFlash(); renderLevelBadge(); }
+  };
+  var rt = $("lt-retry");
+  if(rt) rt.onclick = function(){ openLevelTest(false); };
+  renderLevelBadge();
+}
+function renderLevelBadge(){
+  var b = $("level-badge");
+  if(!b) return;
+  var l = getLevel();
+  b.textContent = l ? ("🎓 " + LEVELS[l].name.split(" · ")[0]) : "📏 点我测级";
+}
+function openLevelMenu(){
+  var l = getLevel();
+  var html = "<div class='quiz-top'><span class='quiz-prog'>🎓 我的级别</span>"+
+    "<span class='quiz-score-now'></span><button class='icon-btn' id='lv-close' title='关闭'>✕</button></div>";
+  html += "<div class='lt-desc'>当前级别：<b>" + (l ? esc(LEVELS[l].name) : "未检测（按高一上开放词库）") + "</b><br>"+
+    (l ? esc(LEVELS[l].desc) : "完成 15 题水平检测，自动定制适合你的闪卡词库。") + "</div>";
+  html += "<div class='level-menu-row'>"+
+    "<button class='pbtn main' id='lv-retest'>📏 " + (l ? "重新检测" : "开始水平检测") + "</button>"+
+    "<button class='pbtn lv-set' data-lv='l1'>🌱 手动设为：高一上 · 基础</button>"+
+    "<button class='pbtn lv-set' data-lv='l2'>📈 手动设为：高一下 · 进阶</button>"+
+    "<button class='pbtn lv-set' data-lv='l3'>🚀 手动设为：高阶 · 拔高</button></div>";
+  $("level-body").innerHTML = html;
+  $("level-modal").classList.remove("hidden");
+  $("lv-close").onclick = function(){ $("level-modal").classList.add("hidden"); };
+  $("lv-retest").onclick = function(){ openLevelTest(false); };
+  var sets = $("level-body").querySelectorAll(".lv-set");
+  for(var k = 0; k < sets.length; k++){
+    sets[k].onclick = function(){
+      var lv = this.getAttribute("data-lv");
+      setLevel(lv);
+      if(lv !== "l3" && curLib === "adv" && !visibleAdvGroups().length){ curLib = "book"; curGroup = 0; saveFlashState(); }
+      $("level-modal").classList.add("hidden");
+      buildQueue(); renderFlash(); renderLevelBadge();
+      showToast("🎓 级别已调整为「" + LEVELS[lv].name + "」");
+    };
+  }
+}
+
+/* ---------- 课文听读：听完才能打勾 ---------- */
+var listenState = null; /* {u, parts:[{text, si}], pi, nSents, cancelled} */
+function getListenDone(){ var r = lsGet("listen_done", {}); return (r && typeof r === "object" && !Array.isArray(r)) ? r : {}; }
+function startListen(u){
+  var t = TEXTS[u - 1];
+  if(!t) return;
+  if(!("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined"){
+    showToast("当前浏览器不支持朗读，建议用 Safari / Chrome / 系统浏览器打开");
+    return;
+  }
+  refreshVoices();
+  var parts = [];
+  t.sents.forEach(function(s, si){
+    splitSpeech(s.en).forEach(function(p){ parts.push({ text:p, si:si }); });
+  });
+  listenState = { u:u, parts:parts, pi:0, nSents:t.sents.length, cancelled:false };
+  $("listen-title").textContent = "▶ " + t.unit + " " + t.title_en;
+  $("listen-modal").classList.remove("hidden");
+  try{ window.speechSynthesis.cancel(); }catch(e){}
+  try{ window.speechSynthesis.resume(); }catch(e2){}
+  setTimeout(listenPlayNext, 60);
+}
+function listenUpdateUI(){
+  var st = listenState;
+  var si = st.pi < st.parts.length ? st.parts[st.pi].si : st.nSents - 1;
+  $("listen-prog-txt").textContent = "第 " + (si + 1) + "/" + st.nSents + " 句";
+  $("listen-bar").style.width = Math.round(st.pi / st.parts.length * 100) + "%";
+  var s = TEXTS[st.u - 1].sents[si];
+  $("listen-sent").innerHTML = "<div class='si'>正在播放 第 " + (si+1) + " 句 🔊</div><div>" + esc(s.en) + "</div><div class='si' style='margin-top:6px'>" + esc(s.cn) + "</div>";
+}
+function listenPlayNext(){
+  var st = listenState;
+  if(!st || st.cancelled) return;
+  if(st.pi >= st.parts.length){ onListenComplete(); return; }
+  listenUpdateUI();
+  var part = st.parts[st.pi];
+  var uu = new SpeechSynthesisUtterance(part.text);
+  uu.lang = "en-US";
+  uu.rate = getVoiceRate();
+  var v = pickVoice();
+  if(v) uu.voice = v;
+  uu.onend = function(){
+    if(!listenState || listenState.cancelled || listenState !== st) return;
+    st.pi++;
+    /* 句与句之间稍停顿，段内连续播 */
+    var gap = (st.pi < st.parts.length && st.parts[st.pi].si !== part.si) ? 420 : 60;
+    setTimeout(listenPlayNext, gap);
+  };
+  uu.onerror = function(){ cancelListen(false); };
+  try{ window.speechSynthesis.speak(uu); }catch(e){ cancelListen(true); }
+}
+function cancelListen(silent){
+  if(!listenState) return;
+  listenState.cancelled = true;
+  try{ window.speechSynthesis.cancel(); }catch(e){}
+  listenState = null;
+  $("listen-modal").classList.add("hidden");
+  if(!silent) showToast("已取消，本次收听不计入完成");
+}
+function onListenComplete(){
+  var st = listenState;
+  if(!st) return;
+  var u = st.u;
+  listenState = null;
+  try{ window.speechSynthesis.cancel(); }catch(e){}
+  $("listen-bar").style.width = "100%";
+  $("listen-modal").classList.add("hidden");
+  /* 自然播完整篇：记 listen_done 并自动打勾 read_done（+5 积分，每单元首次） */
+  var ld = getListenDone();
+  var firstTime = !ld[u];
+  ld[u] = true;
+  lsSet("listen_done", ld);
+  var rd = getReadDone();
+  rd[u] = true;
+  lsSet("read_done", rd);
+  if(firstTime) lbAddPoints(5, 0);
+  renderTexts();
+  checkExamUnlock();
+  showToast("🎉 已听完整篇课文，自动完成本单元朗读打卡！");
+}
+
+/* ---------- 朗读评星 ---------- */
+var readState = null; /* {u, si, stars:[], supported, rec, listening, selfEval} */
+function getReadStars(){ var r = lsGet("read_stars", {}); return (r && typeof r === "object" && !Array.isArray(r)) ? r : {}; }
+function speechRecOK(){
+  return typeof window !== "undefined" && !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+}
+function startReadAloud(u){
+  var t = TEXTS[u - 1];
+  if(!t) return;
+  readState = { u:u, si:0, stars:[], supported:speechRecOK(), rec:null, listening:false, selfEval:false };
+  $("read-title").textContent = "🎤 " + t.unit + " " + t.title_en;
+  $("read-modal").classList.remove("hidden");
+  renderReadSentence();
+}
+function cancelReadAloud(){
+  if(!readState) return;
+  try{ if(readState.rec) readState.rec.abort(); }catch(e){}
+  readState = null;
+  $("read-modal").classList.add("hidden");
+}
+function renderReadSentence(){
+  var st = readState;
+  var t = TEXTS[st.u - 1];
+  var s = t.sents[st.si];
+  $("read-prog-txt").textContent = "第 " + (st.si + 1) + "/" + t.sents.length + " 句";
+  var got = 0;
+  st.stars.forEach(function(x){ got += x; });
+  $("read-stars-sofar").textContent = st.stars.length ? "已获 ⭐" + got : "";
+  $("read-bar").style.width = Math.round(st.si / t.sents.length * 100) + "%";
+  var html = "<div class='read-target'><div class='en'>" + esc(s.en) + " <button class='spk' id='read-replay'>🔊</button></div>"+
+    "<div class='cn'>" + esc(s.cn) + "</div></div>";
+  if(st.supported && !st.selfEval){
+    html += "<button class='rec-btn' id='read-rec'>🎤 点我开始跟读</button>"+
+      "<div class='muted' style='margin-top:6px;font-size:.72rem'>点按钮后对准麦克风朗读这句英文。需要 https 或 localhost 环境授予麦克风权限。</div>"+
+      "<div id='read-fb'></div>";
+  }else{
+    html += "<div class='muted' style='margin:6px 0;font-size:.78rem'>⚠️ 当前浏览器不支持语音识别（或麦克风未授权），请大声朗读后给自己评个星：</div>"+
+      "<div class='star-row' id='read-selfeval'>"+
+      [1,2,3,4,5].map(function(n){ return "<button class='star-btn' data-st='" + n + "'>⭐</button>"; }).join("") + "</div>"+
+      "<div id='read-fb'></div>";
+  }
+  $("read-body").innerHTML = html;
+  $("read-replay").onclick = function(){ speak(s.en); };
+  var recBtn = $("read-rec");
+  if(recBtn) recBtn.onclick = toggleRec;
+  var stars = $("read-body").querySelectorAll(".star-btn");
+  for(var k = 0; k < stars.length; k++){
+    stars[k].onclick = function(){ finishReadSentence(parseInt(this.getAttribute("data-st"), 10), null); };
+  }
+}
+function toggleRec(){
+  var st = readState;
+  if(!st || !st.supported) return;
+  if(st.listening){
+    try{ st.rec.stop(); }catch(e){}
+    return;
+  }
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var rec;
+  try{ rec = new SR(); }catch(e){ showToast("语音识别启动失败"); return; }
+  rec.lang = "en-US";
+  rec.interimResults = false;
+  rec.maxAlternatives = 1;
+  st.rec = rec;
+  st.listening = true;
+  var btn = $("read-rec");
+  if(btn){ btn.classList.add("listening"); btn.textContent = "🎙 正在聆听…（读完点我停止）"; }
+  rec.onresult = function(ev){
+    var said = "";
+    try{ said = ev.results[0][0].transcript || ""; }catch(e){}
+    st.listening = false;
+    var stars = scoreReadStars(TEXTS[st.u - 1].sents[st.si].en, said);
+    finishReadSentence(stars, said);
+  };
+  rec.onerror = function(ev){
+    st.listening = false;
+    var err = ev && ev.error ? ev.error : "";
+    if(err === "not-allowed" || err === "service-not-allowed"){
+      /* 无麦克风权限：降级为朗读后自评 */
+      st.selfEval = true;
+      showToast("麦克风未授权（需 https 或 localhost），已切换为自评星级");
+      renderReadSentence();
+    }else if(err === "no-speech"){
+      showToast("没听清，请再试一次");
+      renderReadSentence();
+    }else{
+      st.selfEval = true;
+      showToast("语音识别不可用，已切换为自评星级");
+      renderReadSentence();
+    }
+  };
+  rec.onend = function(){ st.listening = false; };
+  try{ rec.start(); }catch(e){ st.listening = false; }
+}
+/* 词级匹配：目标句与识别文本的词重合率（忽略大小写与标点）→ 1-5 星 */
+function scoreReadStars(target, said){
+  var norm = function(s){
+    return String(s).toLowerCase().replace(/[^a-z' ]/g, " ").split(/\s+/).filter(function(w){ return w.length > 0; });
+  };
+  var tw = norm(target), sw = norm(said);
+  if(!tw.length || !sw.length) return 1;
+  /* 多重集交集：每个目标词最多被匹配一次 */
+  var pool = {};
+  sw.forEach(function(w){ pool[w] = (pool[w] || 0) + 1; });
+  var hit = 0;
+  tw.forEach(function(w){
+    if(pool[w] > 0){ hit++; pool[w]--; }
+  });
+  var ratio = hit / tw.length;
+  if(ratio >= 0.9) return 5;
+  if(ratio >= 0.75) return 4;
+  if(ratio >= 0.6) return 3;
+  if(ratio >= 0.4) return 2;
+  return 1;
+}
+function finishReadSentence(stars, said){
+  var st = readState;
+  if(!st) return;
+  st.stars.push(stars);
+  var starStr = "";
+  for(var i = 0; i < 5; i++) starStr += i < stars ? "⭐" : "☆";
+  var fb = $("read-fb");
+  if(fb){
+    fb.innerHTML = "<div class='rec-result'>"+
+      (said !== null && said !== undefined ? "🗣 识别结果：" + esc(said || "（空）") + "<br>" : "")+
+      "<div class='star-show'>" + starStr + "</div>"+
+      "<div style='text-align:center;font-weight:700;color:var(--orange)'>本句 " + stars + " 星" +
+      (stars >= 4 ? "，读得真棒！" : stars >= 3 ? "，不错，继续加油！" : "，再听一遍 🔊 跟读试试！") + "</div>"+
+      "<button class='pbtn main' id='read-next' style='width:100%;margin-top:8px'>"+
+      (st.si + 1 < TEXTS[st.u - 1].sents.length ? "下一句 ▶" : "完成本篇 🏁") + "</button></div>";
+    $("read-next").onclick = function(){
+      st.si++;
+      if(st.si < TEXTS[st.u - 1].sents.length) renderReadSentence();
+      else finishReadAloud();
+    };
+  }
+}
+function finishReadAloud(){
+  var st = readState;
+  var t = TEXTS[st.u - 1];
+  var total = 0;
+  st.stars.forEach(function(x){ total += x; });
+  var avg = Math.round(total / t.sents.length * 10) / 10;
+  /* 整篇平均星数存 read_stars[u]（取历史最佳）；积分按当次总星数累加 */
+  var rs = getReadStars();
+  if(!rs[st.u] || avg > rs[st.u]){ rs[st.u] = avg; lsSet("read_stars", rs); }
+  lbAddPoints(total * 2, total);
+  readState = null;
+  $("read-bar").style.width = "100%";
+  $("read-modal").classList.add("hidden");
+  renderTexts();
+  renderLbPreview();
+  showToast("🎤 本篇朗读完成：平均 " + avg + " 星，积分 +" + (total * 2) + "！");
+}
+/* ================= 启动（登录门控） ================= */
+var appBooted = false;
+function bootApp(){
+  if(appBooted) return;
+  appBooted = true;
+  /* 每个绑定/初始化独立容错：单点失败（如 initFlash 抛错）不得波及其它绑定，
+     否则会出现「查看全部」排行榜、级别徽章等按钮集体失效 */
+  try{ buildNav(); }catch(e){}
+  try{ $("checkin-btn").onclick = doCheckin; }catch(e){}
+  try{ initPlanEditor(); }catch(e){}
+  try{ initFlash(); }catch(e){}
+  try{ $("gram-retest-btn").onclick = startRetest; }catch(e){}
+  try{ $("gram-wb-btn").onclick = openWrongBook; }catch(e){}
+  try{ $("quiz-modal").onclick = function(ev){ if(ev.target === this) closeQuiz(); }; }catch(e){}
+  try{ $("unlock-close").onclick = function(){ $("unlock-modal").classList.add("hidden"); }; }catch(e){}
+  try{ $("unlock-modal").onclick = function(ev){ if(ev.target === this) this.classList.add("hidden"); }; }catch(e){}
+  try{ $("lb-open").onclick = openLeaderboard; }catch(e){}
+  try{ $("lb-close").onclick = function(){ $("lb-modal").classList.add("hidden"); }; }catch(e){}
+  try{ $("lb-modal").onclick = function(ev){ if(ev.target === this) this.classList.add("hidden"); }; }catch(e){}
+  try{ $("level-badge").onclick = openLevelMenu; }catch(e){}
+  try{ $("listen-cancel").onclick = function(){ cancelListen(false); }; }catch(e){}
+  try{ $("read-cancel").onclick = function(){ cancelReadAloud(); }; }catch(e){}
+  try{ $("listen-modal").onclick = function(ev){ if(ev.target === this) cancelListen(false); }; }catch(e){}
+  try{ $("read-modal").onclick = function(ev){ if(ev.target === this) cancelReadAloud(); }; }catch(e){}
+  try{ $("level-modal").onclick = function(ev){ /* 检测中不允许点遮罩退出 */ }; }catch(e){}
+  try{
+    /* 页面隐藏/切走时：听课文与朗读立即中断（不计完成） */
+    document.addEventListener("visibilitychange", function(){
+      if(document.hidden){
+        if(listenState) cancelListen(true);
+        if(readState && readState.listening){ try{ readState.rec.abort(); }catch(e){} readState.listening = false; }
+      }
+    });
+  }catch(e){}
+  /* 收尾渲染：逐步容错——任何一步异常都不能阻断后面的回显
+     （自动登录路径曾出现用户条/级别徽章空白，根因是前序渲染抛错导致后续步骤被跳过） */
+  try{ updateWrongEntryUI(); }catch(e){}
+  try{ renderGrammar(); }catch(e){}
+  try{ renderTexts(); }catch(e){}
+  try{ initPomo(); }catch(e){}
+  try{ renderUserChip(); }catch(e){}     /* 顶部当前用户 + 切换用户按钮 */
+  try{ renderLbPreview(); }catch(e){}    /* 首页排行榜前三名预览 */
+  try{ renderLevelBadge(); }catch(e){}   /* 闪卡页级别徽章（按已存 level 回显） */
+  try{ lbSyncUser(curUserId()); }catch(e){}
+  try{ switchTab("home"); }catch(e){}
+}
+initUserSystem();
 </script>
 <script>
 if ('serviceWorker' in navigator) {
