@@ -73,11 +73,15 @@ section.page{animation:fadein .25s ease}
   border-radius:10px;margin-bottom:6px;background:#f7f9fc;border:1px solid var(--line);
   min-height:48px;user-select:none;
 }
-.plan-item input{width:22px;height:22px;accent-color:var(--green);flex:none}
-.plan-item .t{flex:1;font-size:.92rem}
+.plan-item .ico{flex:none;font-size:1rem}
+.plan-item .t{flex:1;font-size:.92rem;min-width:0}
+.plan-item .meter{flex:none;width:64px;height:8px;border-radius:6px;background:#e6ecf3;overflow:hidden}
+.plan-item .meter-fill{display:block;height:100%;background:linear-gradient(90deg,var(--green),#46bd84);border-radius:6px;transition:width .3s}
+.plan-item .meter-n{flex:none;font-size:.75rem;font-weight:700;color:var(--green);min-width:34px;text-align:right}
 .plan-item .mins{flex:none;font-size:.75rem;color:var(--orange);font-weight:700;background:#fff2e4;border-radius:20px;padding:2px 9px}
 .plan-item.checked .t{color:var(--muted);text-decoration:line-through}
 .plan-item.checked{background:#eef7f1;border-color:#cdeada}
+.plan-item.free .meter-n{color:var(--muted)}
 
 .week-tips{display:flex;flex-direction:column;gap:8px;font-size:.85rem}
 .week-tips .tip{display:flex;gap:8px;align-items:flex-start}
@@ -252,11 +256,19 @@ section.page{animation:fadein .25s ease}
   display:flex;align-items:center;gap:6px;padding:8px;background:#fff;
   border:1px solid var(--line);border-radius:10px;margin-bottom:6px;
 }
+.plan-edit-row .pe-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
 .plan-edit-row input.txt{flex:1;min-width:0;border:none;background:none;font-size:.88rem;font-family:inherit;outline:none}
+.plan-edit-row .pe-ctrl{display:flex;gap:6px;align-items:center}
+.plan-edit-row select.pe-act{
+  flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:4px 6px;
+  font-size:.8rem;font-family:inherit;background:#f7f9fc;color:var(--text);min-height:32px;
+}
 .plan-edit-row input.num{
   width:52px;flex:none;border:1px solid var(--line);border-radius:8px;padding:4px;
   font-size:.82rem;text-align:center;font-family:inherit;
 }
+.plan-edit-row .pe-ops{display:flex;flex-direction:column;gap:4px}
+.plan-edit-row .pe-ops .icon-btn{width:28px;height:28px;font-size:.78rem}
 .icon-btn{flex:none;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#f7f9fc;font-size:.85rem}
 .modal-add{display:flex;gap:6px;margin-top:10px}
 .modal-add input{border:1px solid var(--line);border-radius:10px;padding:9px;font-size:.85rem;font-family:inherit;min-height:42px}
@@ -481,7 +493,7 @@ section.page{animation:fadein .25s ease}
 <body>
 <header class="app-header">
   <h1>📘 高中英语学习工具</h1>
-  <div class="sub">每天 40 分钟 · 词汇 + 语法 + 课文 + 专注</div>
+  <div class="sub">每天 40 分钟 · 词汇 + 语法 + 课文 + 专注 <span style="opacity:.75;white-space:nowrap" id="ver-tag">v7.0 行为打卡版</span></div>
   <div class="user-row" id="user-row"></div>
 </header>
 
@@ -502,14 +514,14 @@ section.page{animation:fadein .25s ease}
         <div class="lbl">🔥 连续打卡</div>
       </div>
     </div>
-    <button class="checkin-btn" id="checkin-btn">✅ 今日打卡</button>
+    <button class="checkin-btn locked" id="checkin-btn" disabled>✅ 今日打卡</button>
     <div class="checkin-hint" id="checkin-hint"></div>
   </div>
 
   <div class="card">
     <h2>📋 每日学习配方 <button class="mini-btn" id="plan-edit-btn">✏️ 自定义</button></h2>
     <div id="plan-list"></div>
-    <div class="muted" style="margin-top:6px">完成一项勾一项，每天 0 点自动重置。</div>
+    <div class="muted" style="margin-top:6px">任务由真实学习行为自动完成（学习时进度条自动前进），每天 0 点重置。</div>
   </div>
 
   <div class="card">
@@ -10796,8 +10808,45 @@ function switchTab(id){
 }
 
 /* ================= 打卡 ================= */
-function getCheckins(){ var a = lsGet("checkins", []); return Array.isArray(a) ? a : []; }
-function calcStreak(){
+/* ---- 行为驱动的每日任务：任务只能由真实学习行为自动完成，不可手动勾选 ---- */
+var ACT_DEFS = {
+  review: {ico:"🔁", label:"复习闪卡",       goal:10, unit:"张"},
+  new:    {ico:"📖", label:"学新词",         goal:10, unit:"个"},
+  read:   {ico:"🎤", label:"朗读课文",       goal:5,  unit:"句"},
+  listen: {ico:"🎧", label:"听课文",         goal:1,  unit:"篇"},
+  quiz:   {ico:"📝", label:"完成语法测试",   goal:1,  unit:"套"},
+  focus:  {ico:"🍅", label:"完成番茄钟",     goal:1,  unit:"个"}
+};
+/* 当日行为计数：acts_YYYY-MM-DD = {review:3, new:5, ...}（跨 0 点自动重置） */
+function getActs(){
+  var a = lsGet("acts_" + todayStr(), {});
+  return (a && typeof a === "object" && !Array.isArray(a)) ? a : {};
+}
+function saveActs(a){ lsSet("acts_" + todayStr(), a); }
+/* 记录一次行为并刷新首页任务进度；cap 为该项单日上限，防刷分 */
+function bumpAct(type, n){
+  var def = ACT_DEFS[type];
+  if(!def) return;
+  var acts = getActs();
+  acts[type] = Math.min((acts[type] || 0) + (n || 1), def.goal);
+  saveActs(acts);
+  try{ afterActChange(); }catch(e){}   /* 全部达成时自动打卡 */
+  try{ renderHome(); }catch(e){}   /* 当前可能在弹窗/其他 Tab，静默容错 */
+}
+/* 单个任务进度：0-1 */
+function taskProgress(it){
+  var type = it && it.act;
+  if(!type || !ACT_DEFS[type]) return 0;
+  var goal = (typeof it.goal === "number" && it.goal > 0) ? it.goal : ACT_DEFS[type].goal;
+  var done = getActs()[type] || 0;
+  return Math.max(0, Math.min(1, done / goal));
+}
+/* 全部任务是否达成（空计划视为未达成） */
+function allTasksDone(plan){
+  if(!plan || !plan.length) return false;
+  return plan.every(function(it){ return taskProgress(it) >= 1; });
+}
+function getCheckins(){ var a = lsGet("checkins", []); return Array.isArray(a) ? a : []; }function calcStreak(){
   var days = getCheckins();
   if(!days.length) return 0;
   var set = {};
@@ -10817,13 +10866,11 @@ function doCheckin(auto){
   var today = todayStr();
   if(days.indexOf(today) !== -1) return;
   if(!auto){
-    /* 手动点击必须满足：计划非空且当日全部勾选 */
+    /* 手动打卡必须满足：计划非空且当日全部任务由真实学习行为自动达成 */
     var raw = lsGet("plan", null);
     var plan = getPlan();
-    var state = lsGet("plan_" + today, []);
     if((Array.isArray(raw) && raw.length === 0) || !plan.length) return;
-    if(!Array.isArray(state) || state.length !== plan.length) return;
-    if(!state.every(function(x){ return !!x; })) return;
+    if(!allTasksDone(plan)) return;
   }
   days.push(today);
   lsSet("checkins", days);
@@ -10833,20 +10880,22 @@ function doCheckin(auto){
 
 /* ================= 首页 ================= */
 var DEFAULT_PLAN = [
-  {mins:10, text:"复习旧单词（闪卡 → 复习模式）"},
-  {mins:10, text:"学习新单词 10 个（闪卡 → 学新词）"},
-  {mins:10, text:"朗读课文/例句（跟读模仿语音语调）"},
-  {mins:5,  text:"语法速查 1 个知识点"},
-  {mins:5,  text:"整理错题/好句到笔记本"}
+  {mins:10, text:"复习旧单词 10 个（闪卡 → 复习）", act:"review", goal:10},
+  {mins:10, text:"学习新单词 10 个（闪卡 → 学新词）", act:"new", goal:10},
+  {mins:10, text:"朗读课文 5 句（跟读模仿）", act:"read", goal:5},
+  {mins:5,  text:"语法测试 1 套（≥9/12 达标）", act:"quiz", goal:1},
+  {mins:5,  text:"专注番茄钟 1 个（25 分钟）", act:"focus", goal:1}
 ];
 function validPlan(p){
   return Array.isArray(p) && p.length > 0 && p.every(function(it){
     return it && typeof it.text === "string" && it.text.trim() !== "" && typeof it.mins === "number" && it.mins > 0;
   });
 }
+/* 兼容旧自定义计划：无 act 字段的任务视为自由任务，不参与行为判定 */
 function getPlan(){
   var p = lsGet("plan", null);
-  return validPlan(p) ? p : DEFAULT_PLAN.map(function(x){ return {mins:x.mins, text:x.text}; });
+  if(Array.isArray(p) && p.length === 0) return p;   /* 用户主动清空 = 空计划 */
+  return validPlan(p) ? p : DEFAULT_PLAN.map(function(x){ return {mins:x.mins, text:x.text, act:x.act, goal:x.goal}; });
 }
 function getGoal(){
   var g = lsGet("daily_goal", 15);
@@ -10863,30 +10912,27 @@ function renderHome(){
   btn.classList.toggle("done", checked);
   btn.textContent = checked ? "🎉 今日已打卡，继续保持！" : "✅ 今日打卡";
   $("streak-num").textContent = calcStreak();
-  // 计划勾选（按日期存储）
-  var key = "plan_" + todayStr();
+  // 计划进度（按学习行为自动记录，按日期存储）
+  var acts = getActs();
   var plan = getPlan();
-  var state = lsGet(key, []);
-  if(!Array.isArray(state) || state.length !== plan.length){
-    state = plan.map(function(){ return false; });
-  }
   var box = $("plan-list");
   box.innerHTML = "";
   plan.forEach(function(p, i){
-    var row = document.createElement("label");
-    row.className = "plan-item" + (state[i] ? " checked" : "");
-    row.innerHTML = "<input type='checkbox' "+(state[i]?"checked":"")+"><span class='t'>"+esc(p.text)+"</span><span class='mins'>"+p.mins+" 分钟</span>";
-    row.querySelector("input").onchange = function(ev){
-      state[i] = ev.target.checked;
-      lsSet(key, state);
-      row.classList.toggle("checked", state[i]);
-      afterPlanToggle(plan, state);
-    };
+    var row = document.createElement("div");
+    var prog = taskProgress(p);
+    var def = p.act && ACT_DEFS[p.act];
+    var doneN = def ? Math.min(getActs()[p.act] || 0, p.goal || def.goal) : 0;
+    var goal = def ? (p.goal || def.goal) : 0;
+    var cls = "plan-item" + (prog >= 1 ? " checked" : "") + (def ? "" : " free");
+    row.className = cls;
+    var meter = def
+      ? "<span class='meter'><span class='meter-fill' style='width:" + Math.round(prog*100) + "%'></span></span>" +
+        "<span class='meter-n'>" + doneN + "/" + goal + "</span>"
+      : "<span class='meter-n muted'>自由任务</span>";
+    row.innerHTML = "<span class='ico'>" + (def ? def.ico : "✍️") + "</span><span class='t'>" + esc(p.text) + "</span>" + meter;
     box.appendChild(row);
   });
-  /* 打卡锁定：全部勾选才解锁 */
-  var doneN = 0;
-  state.forEach(function(x){ if(x) doneN++; });
+  var doneN = plan.filter(function(p){ return taskProgress(p) >= 1; }).length;
   updateCheckinLock(plan.length, doneN, checked);
   // 今日进度
   var rec = getWordRecs();
@@ -11028,21 +11074,33 @@ function renderChips(){
 /* ================= 语音朗读（跨平台容错封装） ================= */
 var voiceList = [];
 var voiceWarned = false;
+var voiceRetry = 0;      /* 语音列表异步加载重试计数 */
+var gUtter = null;       /* 全局持有 utterance：iOS Safari 上被 GC 回收会静音且 onend 不触发 */
+var ttsErrShown = false; /* TTS 失败提示只弹一次 */
 function refreshVoices(){
   try{
     if("speechSynthesis" in window){
       var v = window.speechSynthesis.getVoices();
-      if(v && v.length) voiceList = v;
+      if(v && v.length){
+        voiceList = v;
+        voiceRetry = 0;
+      }else if(voiceRetry < 4){
+        /* 华为/鸿蒙及部分安卓 WebView：getVoices 首次返回空且 voiceschanged 不触发，轮询兜底 */
+        voiceRetry++;
+        setTimeout(refreshVoices, voiceRetry < 3 ? 300 : 1200);
+      }
     }
   }catch(e){}
 }
-/* 选语音优先级：en-US > en-GB > 任何 en-* > 列表首个（系统默认兜底） */
+/* 选语音优先级：en-US > en-GB > 任何 en-* ；找不到英文语音时返回 null
+   （华为等设备列表常只有中文语音，强制指定中文语音读英文会静音失败——
+     不设置 voice、只设 lang，让系统引擎自行匹配） */
 function pickVoice(){
   var i, v;
   for(i = 0; i < voiceList.length; i++){ v = voiceList[i]; if(/^en-US$/i.test(v.lang || "")) return v; }
   for(i = 0; i < voiceList.length; i++){ v = voiceList[i]; if(/^en-GB$/i.test(v.lang || "")) return v; }
   for(i = 0; i < voiceList.length; i++){ v = voiceList[i]; if(/^en([-_]|$)/i.test(v.lang || "")) return v; }
-  return voiceList.length ? voiceList[0] : null;
+  return null;
 }
 function getVoiceRate(){
   var r = lsGet("voice_rate", 0.92);
@@ -11073,9 +11131,17 @@ function speakParts(parts, idx){
   u.lang = "en-US";
   u.rate = getVoiceRate();
   var v = pickVoice();
-  if(v) u.voice = v;
-  u.onend = function(){ speakParts(parts, idx + 1); };
-  u.onerror = function(){ /* 某段失败即停止后续段，不报错 */ };
+  if(v) u.voice = v;   /* 无英文语音时不指定，交给系统按 lang 匹配 */
+  u.onend = function(){ gUtter = null; speakParts(parts, idx + 1); };
+  u.onerror = function(){
+    gUtter = null;
+    /* 某段失败即停止后续段；首次失败给出可操作提示（华为设备常见） */
+    if(!ttsErrShown){
+      ttsErrShown = true;
+      showToast("朗读启动失败：请在系统设置 → 辅助功能/无障碍 中开启文字转语音（TTS）引擎后重试");
+    }
+  };
+  gUtter = u;          /* 防 iOS Safari GC 静音 */
   window.speechSynthesis.speak(u);
 }
 function speak(text){
@@ -11211,6 +11277,7 @@ function checkSpell(){
   if(val === expect){
     res.innerHTML = "<span class='ok'>✅ 拼写正确！</span>";
     speak(ans);
+    bumpAct("new", 1);   /* 拼写通关也算学新词 */
     setTimeout(function(){ qPos++; renderFlash(); }, 700);
   }else{
     res.innerHTML = "<span class='bad'>❌ 正确答案：</span><span class='ans'>" + esc(ans) + "</span><span class='muted'>（已自动标记为“不认识”，明天复习）</span>";
@@ -11320,7 +11387,10 @@ function initFlash(){
       b.onclick = function(){
         if(qPos >= queue.length) return;
         var w = curGroups()[curGroup].words[queue[qPos]];
+        var isReview = (curMode === "review");
         saveWordRec(w[0], b.dataset.mark);
+        if(isReview) bumpAct("review", 1);
+        else if(curMode === "new") bumpAct("new", 1);
         qPos++;
         renderFlash();
       };
@@ -11336,24 +11406,49 @@ function planTotalMins(p){
   p.forEach(function(it){ s += it.mins; });
   return s;
 }
+/* 行为类型的参考分钟数（用于展示总时长估算） */
+function actRefMins(act){
+  var ref = {review:10, new:10, read:10, listen:8, quiz:8, focus:25};
+  return ref[act] || 5;
+}
 function renderPlanEdit(){
   var box = $("plan-edit-list");
   box.innerHTML = "";
   editPlan.forEach(function(it, i){
     var row = document.createElement("div");
     row.className = "plan-edit-row";
+    /* 任务只能绑定真实学习行为：下拉选类型 + 目标数量，完成后自动判定 */
+    var opts = Object.keys(ACT_DEFS).map(function(k){
+      var d = ACT_DEFS[k];
+      return "<option value='"+k+"'" + (it.act === k ? " selected" : "") + ">"+d.ico+" "+d.label+"</option>";
+    }).join("");
+    var goalVal = (typeof it.goal === "number" && it.goal > 0) ? it.goal : ACT_DEFS[it.act || "review"].goal;
     row.innerHTML =
-      "<input class='txt' value='" + esc(it.text) + "' maxlength='30'>" +
-      "<input class='num' type='number' min='1' max='120' value='" + it.mins + "'>" +
-      "<button class='icon-btn pe-up' title='上移'" + (i===0 ? " disabled" : "") + ">↑</button>" +
-      "<button class='icon-btn pe-down' title='下移'" + (i===editPlan.length-1 ? " disabled" : "") + ">↓</button>" +
-      "<button class='icon-btn pe-del' title='删除'>🗑</button>";
+      "<div class='pe-main'>" +
+        "<input class='txt' value='" + esc(it.text) + "' maxlength='30'>" +
+        "<div class='pe-ctrl'>" +
+          "<select class='pe-act'>" + opts + "</select>" +
+          "<input class='num goal' type='number' min='1' max='99' value='" + goalVal + "' title='目标数量'>" +
+        "</div>" +
+      "</div>" +
+      "<div class='pe-ops'>" +
+        "<button class='icon-btn pe-up' title='上移'" + (i===0 ? " disabled" : "") + ">↑</button>" +
+        "<button class='icon-btn pe-down' title='下移'" + (i===editPlan.length-1 ? " disabled" : "") + ">↓</button>" +
+        "<button class='icon-btn pe-del' title='删除'>🗑</button>" +
+      "</div>";
     row.querySelector(".txt").onchange = function(){ editPlan[i].text = this.value; };
-    row.querySelector(".num").onchange = function(){
+    row.querySelector(".pe-act").onchange = function(){
+      editPlan[i].act = this.value;
+      editPlan[i].goal = ACT_DEFS[this.value].goal;
+      editPlan[i].mins = actRefMins(this.value);
+      renderPlanEdit();
+    };
+    row.querySelector(".num.goal").onchange = function(){
       var v = parseInt(this.value, 10);
       if(isNaN(v) || v < 1) v = 1;
-      if(v > 120) v = 120;
-      editPlan[i].mins = v;
+      if(v > 99) v = 99;
+      editPlan[i].goal = v;
+      editPlan[i].mins = actRefMins(editPlan[i].act);
       this.value = v;
       $("plan-total").textContent = "共 " + planTotalMins(editPlan) + " 分钟";
     };
@@ -11386,18 +11481,22 @@ function initPlanEditor(){
     var m = parseInt($("plan-new-mins").value, 10);
     if(!t || isNaN(m) || m < 1){ $("plan-total").textContent = "请填写内容和分钟数"; return; }
     if(m > 120) m = 120;
-    editPlan.push({mins: m, text: t});
+    editPlan.push({mins: m, text: t, act: "review", goal: ACT_DEFS.review.goal});
     $("plan-new-text").value = "";
     $("plan-new-mins").value = "";
     renderPlanEdit();
   };
   $("plan-reset-btn").onclick = function(){
-    editPlan = DEFAULT_PLAN.map(function(x){ return {mins:x.mins, text:x.text}; });
+    editPlan = DEFAULT_PLAN.map(function(x){ return {mins:x.mins, text:x.text, act:x.act, goal:x.goal}; });
     renderPlanEdit();
   };
   $("plan-save-btn").onclick = function(){
     var clean = editPlan.filter(function(it){ return it.text && it.text.trim() !== ""; })
-      .map(function(it){ return {mins: it.mins, text: it.text.trim()}; });
+      .map(function(it){
+        var act = ACT_DEFS[it.act] ? it.act : "review";
+        var goal = (typeof it.goal === "number" && it.goal > 0) ? it.goal : ACT_DEFS[act].goal;
+        return {mins: it.mins, text: it.text.trim(), act: act, goal: goal};
+      });
     if(!clean.length){ $("plan-total").textContent = "至少保留 1 项"; return; }
     lsSet("plan", clean);
     closePlanModal();
@@ -11512,6 +11611,7 @@ function onPomoDone(){
     var cnt = lsGet("pomodoros", 0);
     if(typeof cnt !== "number") cnt = 0;
     lsSet("pomodoros", cnt + 1);
+    bumpAct("focus", 1);   /* 专注番茄完成 */
     renderStats();
     setPomoMode("break");
   }else{
@@ -11736,6 +11836,7 @@ function showQuizResult(){
   var secs = Math.max(1, Math.round((Date.now() - quiz.startTs) / 1000));
   var mm = Math.floor(secs / 60), ss = secs % 60;
   var timeStr = (mm ? mm + " 分 " : "") + ss + " 秒";
+  if(quiz.mode === "quiz") bumpAct("quiz", 1);   /* 完成一整套语法测试 = 一次测试行为 */
   if(quiz.mode === "quiz"){
     var best = gramBest();
     var prev = best[quiz.gi];
@@ -11982,7 +12083,7 @@ function updateCheckinLock(total, done, checked){
     btn.disabled = false;
     if(hint) hint.textContent = "";
     return;
-  }
+   }
   if(customEmpty || total === 0){
     btn.classList.add("locked");
     btn.disabled = true;
@@ -11999,9 +12100,10 @@ function updateCheckinLock(total, done, checked){
     if(hint) hint.textContent = "完成全部学习任务后可打卡（" + done + "/" + total + "）";
   }
 }
-function afterPlanToggle(plan, state){
-  var doneN = 0;
-  state.forEach(function(x){ if(x) doneN++; });
+/* 行为计数变化后重估打卡锁定；全部达成时自动打卡 */
+function afterActChange(){
+  var plan = getPlan();
+  var doneN = plan.filter(function(p){ return taskProgress(p) >= 1; }).length;
   var checked = getCheckins().indexOf(todayStr()) !== -1;
   if(!checked && plan.length && doneN === plan.length){
     doCheckin(true);
@@ -12604,15 +12706,25 @@ function listenPlayNext(){
   uu.lang = "en-US";
   uu.rate = getVoiceRate();
   var v = pickVoice();
-  if(v) uu.voice = v;
+  if(v) uu.voice = v;   /* 无英文语音时不指定，交给系统按 lang 匹配 */
   uu.onend = function(){
+    gUtter = null;
     if(!listenState || listenState.cancelled || listenState !== st) return;
     st.pi++;
     /* 句与句之间稍停顿，段内连续播 */
     var gap = (st.pi < st.parts.length && st.parts[st.pi].si !== part.si) ? 420 : 60;
     setTimeout(listenPlayNext, gap);
   };
-  uu.onerror = function(){ cancelListen(false); };
+  uu.onerror = function(){
+    gUtter = null;
+    if(!listenState || listenState.cancelled) return;
+    cancelListen(false);
+    if(!ttsErrShown){
+      ttsErrShown = true;
+      showToast("朗读启动失败：请在系统设置 → 辅助功能/无障碍 中开启文字转语音（TTS）引擎后重试");
+    }
+  };
+  gUtter = uu;          /* 防 iOS Safari GC 静音 */
   try{ window.speechSynthesis.speak(uu); }catch(e){ cancelListen(true); }
 }
 function cancelListen(silent){
@@ -12640,6 +12752,7 @@ function onListenComplete(){
   rd[u] = true;
   lsSet("read_done", rd);
   if(firstTime) lbAddPoints(5, 0);
+  bumpAct("listen", 1);   /* 听完整篇 = 完成朗读类任务的行为信号 */
   renderTexts();
   checkExamUnlock();
   showToast("🎉 已听完整篇课文，自动完成本单元朗读打卡！");
@@ -12699,6 +12812,7 @@ function toggleRec(){
   var st = readState;
   if(!st || !st.supported) return;
   if(st.listening){
+    st.manualStop = true;   /* 用户主动停止：onend 不做假支持判断 */
     try{ st.rec.stop(); }catch(e){}
     return;
   }
@@ -12713,6 +12827,7 @@ function toggleRec(){
   var btn = $("read-rec");
   if(btn){ btn.classList.add("listening"); btn.textContent = "🎙 正在聆听…（读完点我停止）"; }
   rec.onresult = function(ev){
+    rec._gotResult = true;   /* 标记真的拿到过结果：onend 据此判断是否假支持 */
     var said = "";
     try{ said = ev.results[0][0].transcript || ""; }catch(e){}
     st.listening = false;
@@ -12736,8 +12851,26 @@ function toggleRec(){
       renderReadSentence();
     }
   };
-  rec.onend = function(){ st.listening = false; };
-  try{ rec.start(); }catch(e){ st.listening = false; }
+  rec.onend = function(){
+    st.listening = false;
+    var btn2 = $("read-rec");
+    if(btn2 && !st.selfEval){ btn2.classList.remove("listening"); btn2.textContent = "🎤 点我开始跟读"; }
+    /* iOS Safari：webkitSpeechRecognition 接口存在但服务不可用——
+       start 后不触发 onresult/onerror，只触发 onend（秒结束）。
+       onend 且无结果且非用户主动停止 = 假支持，降级为自评星级 */
+    if(!st.manualStop && st.rec && st.rec._gotResult !== true && !st.selfEval){
+      st.selfEval = true;
+      showToast("此浏览器语音识别不可用，已切换为自评星级");
+      renderReadSentence();
+    }
+    st.manualStop = false;
+  };
+  try{ rec.start(); }catch(e){
+    st.listening = false;
+    st.selfEval = true;
+    showToast("语音识别启动失败，已切换为自评星级");
+    renderReadSentence();
+  };
 }
 /* 词级匹配：目标句与识别文本的词重合率（忽略大小写与标点）→ 1-5 星 */
 function scoreReadStars(target, said){
@@ -12764,6 +12897,7 @@ function finishReadSentence(stars, said){
   var st = readState;
   if(!st) return;
   st.stars.push(stars);
+  bumpAct("read", 1);   /* 每完成一句跟读评星 = 一次朗读行为 */
   var starStr = "";
   for(var i = 0; i < 5; i++) starStr += i < stars ? "⭐" : "☆";
   var fb = $("read-fb");
@@ -12807,7 +12941,7 @@ function bootApp(){
   /* 每个绑定/初始化独立容错：单点失败（如 initFlash 抛错）不得波及其它绑定，
      否则会出现「查看全部」排行榜、级别徽章等按钮集体失效 */
   try{ buildNav(); }catch(e){}
-  try{ $("checkin-btn").onclick = doCheckin; }catch(e){}
+  try{ $("checkin-btn").onclick = function(ev){ if(ev && ev.preventDefault) ev.preventDefault(); doCheckin(false); }; }catch(e){}
   try{ initPlanEditor(); }catch(e){}
   try{ initFlash(); }catch(e){}
   try{ $("gram-retest-btn").onclick = startRetest; }catch(e){}
